@@ -1,0 +1,55 @@
+---
+title: "genome-note"
+author: "Maisie Walker Stelling"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+
+This document is for the purpose of plotting for the whole genome assembly of S. plana. All other analysis has been conducted in Galaxy.
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r packages-auto, message = FALSE, warning = FALSE}
+# Install and load packages
+pacman::p_load(
+  
+  
+  # Data import, export, and wrangling
+  janitor, openxlsx, readxl, tidyverse, writexl, yaml, GGally,
+  
+ 
+  # Plots
+  corrplot, ggpubr, scales, viridis, viridisLite, patchwork,ggVennDiagram, UpSetR, imager,
+  
+
+  # Utilities 
+  beepr, ccl, cli, crayon, glue, here) 
+
+# Prevent masking of `dplyr` functions by other packages
+filter <- dplyr::filter
+recode <- dplyr::recode
+select <- dplyr::select
+```
+
+```{r load-images, }
+GSM001 <- load.image("input/GSM001 map DeGenies.png")
+#GSM002 <- 
+
+plot(GSM001)
+
+```
+
+Plot one on top of the other, then save 
+```{r save}
+degenies <- (GSM001/GSM002)+
+  plot_annotation(tag_levels = "a")
+
+ggsave("output/degenies stacked.png", 
+       degenies, 
+       device = png,
+       dpi = 300)
+```
+
